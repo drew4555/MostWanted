@@ -12,9 +12,8 @@ function app(people){
       mainMenu(foundPerson, people);
       break;
     case 'no':
-      // TODO: search by traits
-      var foundTraits = searchByTraits(people);
-      mainMenu(foundTraits, people);
+     var foundTraits = searchByTrait(people);
+     mainMenu(foundPerson, people);
       break;
       default:
     app(people); // restart app
@@ -23,19 +22,20 @@ function app(people){
 }
 
 // Menu function to call once you find who you are looking for
-function mainMenu(person, people){
+function mainMenu(foundPerson, people,){
 
   /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
 
-  if(!person){                                                
+  if(!foundPerson){
     alert("Could not find that individual.");
-    return app(people); // restart
+    return app(people,foundPerson); // restart
   }
 
-  var displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+  var displayOption = prompt("Found " + foundPerson[0].firstName + " " + foundPerson[0].lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
 
   switch(displayOption){
     case "info":
+    displayPerson(foundPerson);
     // TODO: get person's info
     displayPerson(foundPerson);
     break;
@@ -55,7 +55,7 @@ function mainMenu(person, people){
     case "quit":
     return; // stop execution
     default:
-    return mainMenu(person, people); // ask again
+    return mainMenu(foundPerson, people); // ask again
   }
 }
 
