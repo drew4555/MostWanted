@@ -37,12 +37,17 @@ function mainMenu(person, people){
   switch(displayOption){
     case "info":
     // TODO: get person's info
+    displayPerson(foundPerson);
     break;
     case "family":
     // TODO: get person's family
+    displayPerson()
+
     break;
     case "descendants":
     // TODO: get person's descendants
+    displayPerson()
+
     break;
     case "restart":
     app(people); // restart
@@ -80,8 +85,16 @@ function displayPeople(people){
 function displayPerson(person){
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
-  var personInfo = "First Name: " + person.firstName + "\n";
-  personInfo += "Last Name: " + person.lastName + "\n";
+  var personInfo = "First Name: " + foundPerson[0].firstName + "\n";
+  personInfo += "Last Name: " + foundPerson[0].lastName + "\n";
+  personInfo += "Gender: " + foundPerson[0].gender + "\n";
+  personInfo += "Dob" + foundPerson[0].dob + "\n";
+  personInfo += "Height" + foundPerson[0].height + "\n";
+  personInfo += "Weight" + foundPerson[0].weight + "\n";
+  personInfo += "Eye Color" + foundPerson[0].eyeColor + "\n";
+  personInfo += "Occupation" + foundPerson[0].occupation + "\n";
+  personInfo += "Parents" + foundPerson[0].parents + "\n";
+  personInfo += "Current Spouse" + foundPerson[0].currentSpouse + "\n";
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
