@@ -77,15 +77,25 @@ function displayPeople(people){
   }).join("\n"));
 }
 
-function displayPerson(person){
+function displayPerson(foundPerson){
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
-  var personInfo = "First Name: " + person.firstName + "\n";
-  personInfo += "Last Name: " + person.lastName + "\n";
+  var personInfo = "First Name: " + foundPerson[0].firstName + "\n";
+  personInfo += "Last Name: " + foundPerson[0].lastName + "\n";
+  personInfo += "Gender: " + foundPerson[0].gender + "\n";
+  personInfo += "Dob: " + foundPerson[0].dob + "\n";
+  personInfo += "Height: " + foundPerson[0].height + "\n";
+  personInfo += "Weight: " + foundPerson[0].weight + "\n";
+  personInfo += "Eye Color: " + foundPerson[0].eyeColor + "\n";
+  personInfo += "Occupation: " + foundPerson[0].occupation + "\n";
+  personInfo += "Parents: " + foundPerson[0].parents + "\n";
+  personInfo += "Spouse: " + foundPerson[0].currentSpouse + "\n";
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
-
+function displayFamily(foundPerson){
+  var personFam = "First Name"
+}
 // function that prompts and validates user input
 function promptFor(question, valid){
   do{
