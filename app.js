@@ -39,9 +39,11 @@ function mainMenu(foundPerson, people,){
     // TODO: get person's info
     break;
     case "family":
+    displayFamily(foundPerson);
     // TODO: get person's family
     break;
     case "descendants":
+    displayDecendents(foundPerson);
     // TODO: get person's descendants
     break;
     case "restart":
@@ -88,13 +90,47 @@ function displayPerson(foundPerson){
   personInfo += "Weight: " + foundPerson[0].weight + "\n";
   personInfo += "Eye Color: " + foundPerson[0].eyeColor + "\n";
   personInfo += "Occupation: " + foundPerson[0].occupation + "\n";
-  personInfo += "Parents: " + foundPerson[0].parents + "\n";
-  personInfo += "Spouse: " + foundPerson[0].currentSpouse + "\n";
+
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
-function displayFamily(foundPerson){
-  var personFam = "First Name"
+function findParents(foundPerson, people){          //concider turning into for loop for checking each index
+var foundPersonParents = people.filter(function(person){
+  if(foundPerson.parents[0] === person.id || foundPerson.parents[1] === person.id){
+    return true;
+  }
+  else{
+    return false;
+  }
+})
+  return(foundPersonParents);
+}
+function findChildren(foundPerson, people){
+  var foundPersonChildren = people.filter(function(person){
+    if(person.parents[0] === foundPerson.id || person.parents[1] === foundPerson.id){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  return(foundPersonChildren);
+}
+function displayfamily(foundPerson, foundPersonParents);
+var personsFamily = foundPerson[0].firstName + "'s family" + "\n";
+personsFamily += "Parents are: " +foundPersonParents[0].firstName + " " + foundPersonParents[0].lastName + "/n"
+foundPersonParents[1].firstName + " " + foundPersonParents[1].lastName + "\n"
+// function displayFamily(foundPerson){
+  // var personFam = "People related to: " + foundPerson[0].firstName + " " + foundPerson[0].lastName + "\n";
+  // personFam += "parents: " + foundPerson[0].parents + "\n";
+  // personFam += "children: " + foundPerson[0].children + "\n";
+  // alert(personFam);
+}
+function displayDecendents(foundPerson){
+  var personDecendendents = "Decendents of: " + foundPerson[0].firstName + " " + foundPerson[0].lastName + "\n";
+  personDecendendents += "Children: " + foundPerson[0].children + "\n";
+  personDecendendents += "Grandchildren: " + foundPerson[0].grandchildren + "\n";
+  alert(personDecendendents); 
 }
 // function that prompts and validates user input
 function promptFor(question, valid){
@@ -113,3 +149,19 @@ function yesNo(input){
 function chars(input){
   return true; // default validation only
 }
+
+
+
+
+
+// var whichtrait = prompt("which trait would you like to search for"){
+//   switch(whichtrait){
+//     case
+//     function(findgender);
+//     case
+//     function(findeyecolor);
+//     case
+//     case
+
+//   }
+// }
