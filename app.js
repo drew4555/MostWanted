@@ -37,14 +37,19 @@ function mainMenu(foundPerson, people,){
     case "info":
     displayPerson(foundPerson);
     // TODO: get person's info
+    displayPerson(foundPerson);
     break;
     case "family":
     displayFamily(foundPerson);
     // TODO: get person's family
+    displayPerson()
+
     break;
     case "descendants":
     displayDecendents(foundPerson);
     // TODO: get person's descendants
+    displayPerson()
+
     break;
     case "restart":
     app(people); // restart
@@ -151,17 +156,25 @@ function chars(input){
 }
 
 
+function searchByTraits(people){
+  var gender = prompt("What is the person's gender?", chars);
+  var dob = prompt("What is the person's date of birth?", chars);
+  var height = prompt("What is the person's height?", chars);
+  var weight = prompt("What is the person's weight?", chars);
+  var eyeColor = prompt("What is the person's eye color?", chars);
+  var occupation = prompt("What is the person's occupation?", chars);
+  // var parents = prompt("Who are the person's parents?", chars);
+  // var currentSpouse = prompt("Who is the person's current spouse?", chars);
 
-
-
-// var whichtrait = prompt("which trait would you like to search for"){
-//   switch(whichtrait){
-//     case
-//     function(findgender);
-//     case
-//     function(findeyecolor);
-//     case
-//     case
-
-//   }
-// }
+  var foundTraits = people.filter(function(person){
+    if(person.gender === gender || person.dob === dob || person.height === height || person.weight === weight || person.eyeColor === eyeColor
+      || person.occupation === occupation){
+        return true;
+      }
+      else{
+        return false;
+      }
+  })
+  console.log(foundTraits);
+  return foundTraits;
+}
