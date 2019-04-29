@@ -154,35 +154,36 @@ function chars(input){
   return true; // default validation only
 }
 
-function searchByTraits(foundTraits, people){
-  if(!foundTraits){
-    alert("Could not find that trait.");
-    return app(foundPerson, foundTraits, people);
-  }
+function searchByTraits(people){
 
-var foundTraits = ["gender", "dob", "height", "weight", "eyeColor", "occupation"];
-foundTraits.toString();
+  // TODO: What is this used for? do we need it, and if so then where?
+  // if(!foundTraits){
+  //   alert("Could not find that trait.");
+  //   return app(foundPerson, foundTraits, people);
+  // }
+
+// var foundTraits = ["gender", "dob", "height", "weight", "eyeColor", "occupation"];
+// foundTraits.toString();
 let matchingPeople = people;
 var whichTrait = prompt("Which trait would you like to search for? (gender, dob, height, weight, eye color, occupation)");
   switch(whichTrait){
     case "gender":
     matchingPeople = findGender(matchingPeople);
-    // function findGender(gender);
     break;
     case "dob":
-    // function findDob(dob);
+    matchingPeople = findDob(matchingPeople);
     break;
     case "height":
-    // function findHeight(height);
+    matchingPeople = findHeight(matchingPeople);
     break;
     case "weight":
-    // function findWeight(weight);
+    matchingPeople = findWeight(matchingPeople);
     break;
     case "eyeColor":
-    // function findEyeColor(eyeColor);
+    matchingPeople = findEyeColor(matchingPeople);
     break;
     case "occupation":
-    // function findOccupation(occupation);
+    matchingPeople = findOccupation(matchingPeople);
     break;
 }
 
@@ -197,6 +198,7 @@ function findGender(people){
       return false;
     }
   })
+  console.log(foundPeople);
   return foundPeople;
 }
 
@@ -205,7 +207,7 @@ function findGender(people){
 // }
 
 function findHeight(people){
-  var height = promptFor("What is the person's gender?", chars);
+  var height = promptFor("What is the person's height?", chars);
   var foundPeople = people.filter(function(person){
     if(person.height === height){
       return true;
@@ -214,11 +216,12 @@ function findHeight(people){
       return false;
     }
   })
+  console.log(foundPeople);
   return foundPeople;
 }
 
 function findWeight(people){
-  var weight = promptFor("What is the person's gender?", chars);
+  var weight = promptFor("What is the person's weight?", chars);
   var foundPeople = people.filter(function(person){
     if(person.weight === weight){
       return true;
@@ -227,11 +230,12 @@ function findWeight(people){
       return false;
     }
   })
+  console.log(foundPeople);
   return foundPeople;
 }
 
 function findEyeColor(people){
-  var eyeColor = promptFor("What is the person's gender?", chars);
+  var eyeColor = promptFor("What is the person's eyeColor?", chars);
   var foundPeople = people.filter(function(person){
     if(person.eyeColor === eyeColor){
       return true;
@@ -240,11 +244,12 @@ function findEyeColor(people){
       return false;
     }
   })
+  console.log(foundPeople);
   return foundPeople;
 }
 
 function findOccupation(people){
-  var occupation = promptFor("What is the person's gender?", chars);
+  var occupation = promptFor("What is the person's occupation?", chars);
   var foundPeople = people.filter(function(person){
     if(person.occupation === occupation){
       return true;
@@ -253,10 +258,15 @@ function findOccupation(people){
       return false;
     }
   })
+  console.log(foundPeople);
   return foundPeople;
 }
 
+// function displayPeople(foundPeople){
+//   for(let i = 0; i < foundPeople.length; i++){
 
+//   }
+// }
 
 
 
