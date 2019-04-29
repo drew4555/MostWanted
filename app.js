@@ -37,18 +37,18 @@ function mainMenu(foundPerson, people,){
     case "info":
     displayPerson(foundPerson);
     // TODO: get person's info
-    displayPerson(foundPerson);
     break;
-    case "family":
-    displayFamily(foundPerson);
+      case "family":
+    let foundSpouse = findSpouse(foundPerson, people);
+    let foundPersonParents = findParents(foundPerson, people);
+    displayFamily(foundPerson,foundPersonParents,foundSpouse);
     // TODO: get person's family
-    displayPerson()
-
     break;
-    case "descendants":
-    displayDecendents(foundPerson);
+      case "descendants":
+    let foundPersonChildren = findChildren(foundPerson, people);
+    displayDecendents(foundPerson, foundPersonChildren);
     // TODO: get person's descendants
-    displayPerson()
+
 
     break;
     case "restart":
@@ -99,7 +99,8 @@ function displayPerson(foundPerson){
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
-function findParents(foundPerson, people){          //concider turning into for loop for checking each index
+function findParents(foundPerson, people){
+  foundPerson = foundPerson[0];          //concider turning into for loop for checking each index
 var foundPersonParents = people.filter(function(person){
   if(foundPerson.parents[0] === person.id || foundPerson.parents[1] === person.id){
     return true;
@@ -110,7 +111,9 @@ var foundPersonParents = people.filter(function(person){
 })
   return(foundPersonParents);
 }
+
 function findChildren(foundPerson, people){
+  foundPerson = foundPerson[0];
   var foundPersonChildren = people.filter(function(person){
     if(person.parents[0] === foundPerson.id || person.parents[1] === foundPerson.id){
       return true;
@@ -121,21 +124,41 @@ function findChildren(foundPerson, people){
   })
   return(foundPersonChildren);
 }
-function displayfamily(foundPerson, foundPersonParents);
-var personsFamily = foundPerson[0].firstName + "'s family" + "\n";
-personsFamily += "Parents are: " +foundPersonParents[0].firstName + " " + foundPersonParents[0].lastName + "/n"
-foundPersonParents[1].firstName + " " + foundPersonParents[1].lastName + "\n"
-// function displayFamily(foundPerson){
-  // var personFam = "People related to: " + foundPerson[0].firstName + " " + foundPerson[0].lastName + "\n";
-  // personFam += "parents: " + foundPerson[0].parents + "\n";
-  // personFam += "children: " + foundPerson[0].children + "\n";
-  // alert(personFam);
+
+function findSpouse(foundPerson, people){
+  var foundSpouse = people.filter(function(person){
+    if(foundPerson[0].currentSpouse === person.id){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  return(foundSpouse);
 }
-function displayDecendents(foundPerson){
-  var personDecendendents = "Decendents of: " + foundPerson[0].firstName + " " + foundPerson[0].lastName + "\n";
-  personDecendendents += "Children: " + foundPerson[0].children + "\n";
-  personDecendendents += "Grandchildren: " + foundPerson[0].grandchildren + "\n";
-  alert(personDecendendents); 
+
+function displayFamily(foundPerson, foundPersonParents, foundSpouse){
+  var personsFamily = foundPerson[0].firstName + "'s family" + "\n";
+if(foundPersonParents.length > 0) personsFamily += "Parents Are: ";
+  for(let i = 0; i < foundPersonParents.length; i++) {
+    personsFamily += foundPersonParents[i].firstName + " " + foundPersonParents[i].lastName + "\n";
+  }
+if(foundSpouse.length > 0) personsFamily += "Spouse is: ";
+  for( let x = 0; x < foundSpouse.length; x++){
+      personsFamily += foundSpouse[x].firstName + " " + foundSpouse[x].lastName + "\n";
+  }
+
+  alert(personsFamily);
+}
+// personsFamily += foundPersonParents[1].firstName + " " + foundPersonParents[1].lastName + "\n";
+
+function displayDecendents(foundPerson,foundPersonChildren){
+  var personsDecendents = foundPerson[0].firstName + "'s Decendents" + "\n";
+  if(foundPersonChildren.length > 0) personsDecendents += "Children Are: ";
+  for( let x = 0; x < foundPersonChildren.length; x++){
+      personsDecendents += foundPersonChildren[x].firstName + " " + foundPersonChildren[x].lastName + "\n";
+  }
+  alert(personsDecendents);
 }
 // function that prompts and validates user input
 function promptFor(question, valid){
