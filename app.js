@@ -113,7 +113,10 @@ var foundPersonParents = people.filter(function(person){
 }
 
 function findChildren(foundPerson, people){
-  foundPerson = foundPerson[0];
+  if(foundPerson.length) {
+    foundPerson = foundPerson[0];
+  }
+
   var foundPersonChildren = people.filter(function(person){
     if(person.parents[0] === foundPerson.id || person.parents[1] === foundPerson.id){
       return true;
@@ -122,6 +125,14 @@ function findChildren(foundPerson, people){
       return false;
     }
   })
+
+  for(let ch = 0; ch < foundPersonChildren.length; ch++){
+    let theChildren = findChildren(foundPersonChildren[ch], people);
+    foundPersonChildren = foundPersonChildren.concat(theChildren);
+  }
+
+  // array1 = array1.concat(array2)
+
   return(foundPersonChildren);
 }
 
@@ -154,7 +165,7 @@ if(foundSpouse.length > 0) personsFamily += "Spouse is: ";
 
 function displayDecendents(foundPerson,foundPersonChildren){
   var personsDecendents = foundPerson[0].firstName + "'s Decendents" + "\n";
-  if(foundPersonChildren.length > 0) personsDecendents += "Children Are: ";
+  if(foundPersonChildren.length > 0);
   for( let x = 0; x < foundPersonChildren.length; x++){
       personsDecendents += foundPersonChildren[x].firstName + " " + foundPersonChildren[x].lastName + "\n";
   }
