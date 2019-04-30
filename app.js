@@ -21,7 +21,7 @@ function app(people){
 
 
 // Menu function to call once you find who you are looking for
-function mainMenu(foundPerson, foundTraits, people,){
+function mainMenu(foundPerson, people){
 
   /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
 
@@ -136,7 +136,7 @@ function displayDecendents(foundPerson){
   personDecendendents += "Grandchildren: " + foundPerson[0].grandchildren + "\n";
   alert(personDecendendents); 
 }
-// function that prompts and validates user input
+// fugenction that prompts and validates user input
 function promptFor(question, valid){
   do{
     var response = prompt(question).trim();
@@ -155,42 +155,43 @@ function chars(input){
 }
 
 function searchByTraits(people){
-
   // TODO: What is this used for? do we need it, and if so then where?
-  // if(!foundTraits){
-  //   alert("Could not find that trait.");
-  //   return app(foundPerson, foundTraits, people);
-  // }
 
-// var foundTraits = ["gender", "dob", "height", "weight", "eyeColor", "occupation"];
-// foundTraits.toString();
 let matchingPeople = people;
-var whichTrait = prompt("Which trait would you like to search for? (gender, dob, height, weight, eye color, occupation)");
-  switch(whichTrait){
-    case "gender":
-    matchingPeople = findGender(matchingPeople);
-    break;
-    case "dob":
-    matchingPeople = findDob(matchingPeople);
-    break;
-    case "height":
-    matchingPeople = findHeight(matchingPeople);
-    break;
-    case "weight":
-    matchingPeople = findWeight(matchingPeople);
-    break;
-    case "eyeColor":
-    matchingPeople = findEyeColor(matchingPeople);
-    break;
-    case "occupation":
-    matchingPeople = findOccupation(matchingPeople);
-    break;
+/* there are multiple people in the array */
+while(matchingPeople.length > 1) {
+    var whichTrait = prompt("Which trait would you like to search for? (gender, dob, height, weight, eye color, occupation)");
+    switch(whichTrait){
+      case "gender":
+      matchingPeople = findGender(matchingPeople);
+      break;
+      case "dob":
+      matchingPeople = findAge(matchingPeople);
+      break;
+      case "height":
+      matchingPeople = findHeight(matchingPeople);
+      break;
+      case "weight":
+      matchingPeople = findWeight(matchingPeople);
+      break;
+      case "eye color":
+      matchingPeople = findEyeColor(matchingPeople);
+      break;
+      case "occupation":
+      matchingPeople = findOccupation(matchingPeople);
+      break;
+    }
+  }
+
+  return matchingPeople;
 }
+
+  // once we have only one person, call mainMenu()
 
 
 function findGender(people){
   var gender = promptFor("What is the person's gender?", chars);
-  var foundPeople = people.filter(function(person){
+  var foundTraits = people.filter(function(person){
     if(person.gender === gender){
       return true;
     }
@@ -198,45 +199,87 @@ function findGender(people){
       return false;
     }
   })
-  console.log(foundPeople);
-  return foundPeople;
+  console.log(foundTraits);
+  return foundTraits;
 }
 
-// function findDob(){
-
+// function findDob(findAge, findCurrentDate, dob){
+//   var today = findCurrentDate();
+//   var age = findAge();
+//   var dob= today - age;
+//   var foundTraits = people.filter(function(person){
+//     if(person.dob === dob){
+//       return true;
+//     }
+//     else{
+//       return false;
+//     }
+//   })
 // }
+
+function findAge(people) {
+  var dob = promptFor("What is the person's age?");
+  var today = new Date();
+  var birthDate = new Date(people);
+  var age = today.getFullYear() - birthDate.getFullYear();
+  var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age = age - 1;
+    }
+    var foundTraits = people.filter(function(person){
+      if(person.eyeColor === eyeColor){
+        return true;
+      }
+      else{
+        return false;
+      }
+    })
+    console.log(foundTraits);
+    return foundTraits;
+}
+
+function findCurrentDate(people){
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+var yyyy = today.getFullYear();
+today = mm + '/' + dd + '/' + yyyy;
+document.write(today);
+console.log(today);
+return today;
+}
 
 function findHeight(people){
   var height = promptFor("What is the person's height?", chars);
-  var foundPeople = people.filter(function(person){
-    if(person.height === height){
+  var foundTraits = people.filter(function(person){
+    if(person.height == height){
       return true;
     }
     else{
       return false;
     }
   })
-  console.log(foundPeople);
-  return foundPeople;
+  console.log(foundTraits);
+  return foundTraits;
 }
 
 function findWeight(people){
   var weight = promptFor("What is the person's weight?", chars);
-  var foundPeople = people.filter(function(person){
-    if(person.weight === weight){
+  var foundTraits = people.filter(function(person){
+    if(person.weight == weight){
       return true;
     }
     else{
       return false;
     }
   })
-  console.log(foundPeople);
-  return foundPeople;
+  console.log(foundTraits);
+  return foundTraits;
 }
 
 function findEyeColor(people){
-  var eyeColor = promptFor("What is the person's eyeColor?", chars);
-  var foundPeople = people.filter(function(person){
+  var eyeColor = promptFor("What is the person's eye color?", chars);
+  var foundTraits = people.filter(function(person){
     if(person.eyeColor === eyeColor){
       return true;
     }
@@ -244,13 +287,14 @@ function findEyeColor(people){
       return false;
     }
   })
-  console.log(foundPeople);
-  return foundPeople;
+  console.log(foundTraits);
+  return foundTraits;
+  
 }
 
 function findOccupation(people){
   var occupation = promptFor("What is the person's occupation?", chars);
-  var foundPeople = people.filter(function(person){
+  var foundTraits = people.filter(function(person){
     if(person.occupation === occupation){
       return true;
     }
@@ -258,37 +302,8 @@ function findOccupation(people){
       return false;
     }
   })
-  console.log(foundPeople);
-  return foundPeople;
+  console.log(foundTraits);
+  return foundTraits;
 }
 
-// function displayPeople(foundPeople){
-//   for(let i = 0; i < foundPeople.length; i++){
 
-//   }
-// }
-
-
-
-    // var gender = prompt("What is the person's gender?", chars);
-    // var dob = prompt("What is the person's date of birth?", chars);
-    // var height = prompt("What is the person's height?", chars);
-    // var weight = prompt("What is the person's weight?", chars);
-    // var eyeColor = prompt("What is the person's eye color?", chars);
-    // var occupation = prompt("What is the person's occupation?", chars);
-  // var parents = prompt("Who are the person's parents?", chars);
-  // var currentSpouse = prompt("Who is the person's current spouse?", chars);
-
-    // var foundTraits = people.filter(function(person){
-    //   if(person.gender === gender || person.dob === dob || person.height === height || person.weight === weight 
-    //     || person.eyeColor === eyeColor || person.occupation === occupation){
-    //       return true;
-    //     }
-    //     else{
-    //       return false;
-    //     }
-    // })
-    // return foundTraits;
-
-
-}
