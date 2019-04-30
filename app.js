@@ -125,18 +125,21 @@ function findChildren(foundPerson, people){
       return false;
     }
   })
+
+  for(let ch = 0; ch < foundPersonChildren.length; ch++){
+    let theChildren = findChildren(foundPersonChildren[ch], people);
+    foundPersonChildren = foundPersonChildren.concat(theChildren);
+  }
+
+  // array1 = array1.concat(array2)
+
   return(foundPersonChildren);
 }
-function displayfamily(foundPerson, foundPersonParents){
-var personsFamily = foundPerson[0].firstName + "'s family" + "\n";
-personsFamily += "Parents are: " +foundPersonParents[0].firstName + " " + foundPersonParents[0].lastName + "/n"
-foundPersonParents[1].firstName + " " + foundPersonParents[1].lastName + "\n"
-// function displayFamily(foundPerson){
-  // var personFam = "People related to: " + foundPerson[0].firstName + " " + foundPerson[0].lastName + "\n";
-  // personFam += "parents: " + foundPerson[0].parents + "\n";
-  // personFam += "children: " + foundPerson[0].children + "\n";
-  // alert(personFam);
-}
+// function displayfamily(foundPerson, foundPersonParents){
+// var personsFamily = foundPerson[0].firstName + "'s family" + "\n";
+// personsFamily += "Parents are: " +foundPersonParents[0].firstName + " " + foundPersonParents[0].lastName + "/n"
+// foundPersonParents[1].firstName + " " + foundPersonParents[1].lastName + "\n"
+// }
 function displayDecendents(foundPerson){
   var personDecendendents = "Decendents of: " + foundPerson[0].firstName + " " + foundPerson[0].lastName + "\n";
   personDecendendents += "Children: " + foundPerson[0].children + "\n";
@@ -200,15 +203,11 @@ function findGender(people){
   var gender = promptFor("What is the person's gender?", chars);
   var foundTraits = people.filter(function(person){
     if(person.gender === gender){
+        return true;
+    }
+  });
 
-  for(let ch = 0; ch < foundPersonChildren.length; ch++){
-    let theChildren = findChildren(foundPersonChildren[ch], people);
-    foundPersonChildren = foundPersonChildren.concat(theChildren);
-  }
-
-  // array1 = array1.concat(array2)
-
-  return(foundPersonChildren);
+  return foundTraits;
 }
 
 function findSpouse(foundPerson, people){
@@ -220,8 +219,8 @@ function findSpouse(foundPerson, people){
       return false;
     }
   })
-  console.log(foundTraits);
-  return foundTraits;
+
+  return foundSpouse;
 }
 
 function findDob(findAge, findCurrentDate, dob){
@@ -259,7 +258,7 @@ function findAge(people) {
     return age;
 }
 
-function findCurrentDate(people){
+function findCurrentDate(){
 var today = new Date();
 var dd = String(today.getDate()).padStart(2, '0');
 var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -282,7 +281,6 @@ function findHeight(people){
   })
   console.log(foundTraits);
   return foundTraits;
-  return(foundSpouse);
 }
 
 function displayFamily(foundPerson, foundPersonParents, foundSpouse){
@@ -370,28 +368,3 @@ function chars(input){
   return true; // default validation only
 }
 
-
-function searchByTraits(people){
-  var gender = prompt("What is the person's gender?", chars);
-  var dob = prompt("What is the person's date of birth?", chars);
-  var height = prompt("What is the person's height?", chars);
-  var weight = prompt("What is the person's weight?", chars);
-  var eyeColor = prompt("What is the person's eye color?", chars);
-  var occupation = prompt("What is the person's occupation?", chars);
-  // var parents = prompt("Who are the person's parents?", chars);
-  // var currentSpouse = prompt("Who is the person's current spouse?", chars);
-
-  var foundTraits = people.filter(function(person){
-    if(person.gender === gender || person.dob === dob || person.height === height || person.weight === weight || person.eyeColor === eyeColor
-      || person.occupation === occupation){
-        return true;
-      }
-      else{
-        return false;
-      }
-  })
-  console.log(foundTraits);
-  return foundTraits;
-}
-  })
-}
