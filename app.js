@@ -12,7 +12,7 @@ function app(people){
       mainMenu(foundPerson, people);
       break;
     case 'no':
-     var foundTraits = searchByTrait(people);
+     var foundTraits = searchByTraits(people);
      mainMenu(foundPerson, people);
       break;
       default:
@@ -165,7 +165,7 @@ if(foundSpouse.length > 0) personsFamily += "Spouse is: ";
 
 function displayDecendents(foundPerson,foundPersonChildren){
   var personsDecendents = foundPerson[0].firstName + "'s Decendents" + "\n";
-  if(foundPersonChildren.length > 0);
+  if(foundPersonChildren.length > 0);      
   for( let x = 0; x < foundPersonChildren.length; x++){
       personsDecendents += foundPersonChildren[x].firstName + " " + foundPersonChildren[x].lastName + "\n";
   }
