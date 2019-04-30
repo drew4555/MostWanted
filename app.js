@@ -13,12 +13,13 @@ function app(people){
       break;
     case 'no':
      var foundTraits = searchByTraits(people);
-     mainMenu(foundTraits, people);
+     mainMenu(foundPerson, people);
       break;
-    }
-      return app(people); // restart app
+      default:
+    app(people); // restart app
+      break;
   }
-
+}
 
 // Menu function to call once you find who you are looking for
 function mainMenu(foundPerson, people){
@@ -27,8 +28,7 @@ function mainMenu(foundPerson, people){
 
   if(!foundPerson){
     alert("Could not find that individual.");
-    return app(foundPerson, foundTraits, people); // restart
-
+    return app(people,foundPerson); // restart
   }
 
   var displayOption = prompt("Found " + foundPerson[0].firstName + " " + foundPerson[0].lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
@@ -38,16 +38,17 @@ function mainMenu(foundPerson, people){
     displayPerson(foundPerson);
     // TODO: get person's info
     break;
-    case "family":
-    displayFamily(foundPerson);
+      case "family":
+    let foundSpouse = findSpouse(foundPerson, people);
+    let foundPersonParents = findParents(foundPerson, people);
+    displayFamily(foundPerson,foundPersonParents,foundSpouse);
     // TODO: get person's family
-    displayPerson(foundPerson)
-
     break;
-    case "descendants":
-    displayDecendents(foundPerson);
+      case "descendants":
+    let foundPersonChildren = findChildren(foundPerson, people);
+    displayDecendents(foundPerson, foundPersonChildren);
     // TODO: get person's descendants
-    displayPerson(foundPerson)
+
 
     break;
     case "restart":
@@ -56,7 +57,7 @@ function mainMenu(foundPerson, people){
     case "quit":
     return; // stop execution
     default:
-    return mainMenu(foundPerson, foundTraits, people); // ask again
+    return mainMenu(foundPerson, people); // ask again
   }
 }
 
@@ -98,7 +99,8 @@ function displayPerson(foundPerson){
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
-function findParents(foundPerson, people){          //concider turning into for loop for checking each index
+function findParents(foundPerson, people){
+  foundPerson = foundPerson[0];          //concider turning into for loop for checking each index
 var foundPersonParents = people.filter(function(person){
   if(foundPerson.parents[0] === person.id || foundPerson.parents[1] === person.id){
     return true;
@@ -109,7 +111,12 @@ var foundPersonParents = people.filter(function(person){
 })
   return(foundPersonParents);
 }
+
 function findChildren(foundPerson, people){
+  if(foundPerson.length) {
+    foundPerson = foundPerson[0];
+  }
+
   var foundPersonChildren = people.filter(function(person){
     if(person.parents[0] === foundPerson.id || person.parents[1] === foundPerson.id){
       return true;
@@ -193,6 +200,20 @@ function findGender(people){
   var gender = promptFor("What is the person's gender?", chars);
   var foundTraits = people.filter(function(person){
     if(person.gender === gender){
+
+  for(let ch = 0; ch < foundPersonChildren.length; ch++){
+    let theChildren = findChildren(foundPersonChildren[ch], people);
+    foundPersonChildren = foundPersonChildren.concat(theChildren);
+  }
+
+  // array1 = array1.concat(array2)
+
+  return(foundPersonChildren);
+}
+
+function findSpouse(foundPerson, people){
+  var foundSpouse = people.filter(function(person){
+    if(foundPerson[0].currentSpouse === person.id){
       return true;
     }
     else{
@@ -203,19 +224,19 @@ function findGender(people){
   return foundTraits;
 }
 
-// function findDob(findAge, findCurrentDate, dob){
-//   var today = findCurrentDate();
-//   var age = findAge();
-//   var dob= today - age;
-//   var foundTraits = people.filter(function(person){
-//     if(person.dob === dob){
-//       return true;
-//     }
-//     else{
-//       return false;
-//     }
-//   })
-// }
+function findDob(findAge, findCurrentDate, dob){
+  var today = findCurrentDate();
+  var age = findAge();
+  var dob= today - age;
+  var foundTraits = people.filter(function(person){
+    if(person.dob === dob){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+}
 
 function findAge(people) {
   var dob = promptFor("What is the person's age?");
@@ -226,16 +247,16 @@ function findAge(people) {
     if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
         age = age - 1;
     }
-    var foundTraits = people.filter(function(person){
-      if(person.eyeColor === eyeColor){
-        return true;
-      }
-      else{
-        return false;
-      }
-    })
-    console.log(foundTraits);
-    return foundTraits;
+    // var foundTraits = people.filter(function(person){
+    //   if(person.eyeColor === eyeColor){
+    //     return true;
+    //   }
+    //   else{
+    //     return false;
+    //   }
+    // })
+    console.log(age);
+    return age;
 }
 
 function findCurrentDate(people){
@@ -261,7 +282,23 @@ function findHeight(people){
   })
   console.log(foundTraits);
   return foundTraits;
+  return(foundSpouse);
 }
+
+function displayFamily(foundPerson, foundPersonParents, foundSpouse){
+  var personsFamily = foundPerson[0].firstName + "'s family" + "\n";
+if(foundPersonParents.length > 0) personsFamily += "Parents Are: ";
+  for(let i = 0; i < foundPersonParents.length; i++) {
+    personsFamily += foundPersonParents[i].firstName + " " + foundPersonParents[i].lastName + "\n";
+  }
+if(foundSpouse.length > 0) personsFamily += "Spouse is: ";
+  for( let x = 0; x < foundSpouse.length; x++){
+      personsFamily += foundSpouse[x].firstName + " " + foundSpouse[x].lastName + "\n";
+  }
+
+  alert(personsFamily);
+}
+// personsFamily += foundPersonParents[1].firstName + " " + foundPersonParents[1].lastName + "\n";
 
 function findWeight(people){
   var weight = promptFor("What is the person's weight?", chars);
@@ -307,3 +344,54 @@ function findOccupation(people){
 }
 
 
+function displayDecendents(foundPerson,foundPersonChildren){
+  var personsDecendents = foundPerson[0].firstName + "'s Decendents" + "\n";
+  if(foundPersonChildren.length > 0);
+  for( let x = 0; x < foundPersonChildren.length; x++){
+      personsDecendents += foundPersonChildren[x].firstName + " " + foundPersonChildren[x].lastName + "\n";
+  }
+  alert(personsDecendents);
+}
+// function that prompts and validates user input
+function promptFor(question, valid){
+  do{
+    var response = prompt(question).trim();
+  } while(!response || !valid(response));
+  return response;
+}
+
+// helper function to pass into promptFor to validate yes/no answers
+function yesNo(input){
+  return input.toLowerCase() == "yes" || input.toLowerCase() == "no";
+}
+
+// helper function to pass in as default promptFor validation
+function chars(input){
+  return true; // default validation only
+}
+
+
+function searchByTraits(people){
+  var gender = prompt("What is the person's gender?", chars);
+  var dob = prompt("What is the person's date of birth?", chars);
+  var height = prompt("What is the person's height?", chars);
+  var weight = prompt("What is the person's weight?", chars);
+  var eyeColor = prompt("What is the person's eye color?", chars);
+  var occupation = prompt("What is the person's occupation?", chars);
+  // var parents = prompt("Who are the person's parents?", chars);
+  // var currentSpouse = prompt("Who is the person's current spouse?", chars);
+
+  var foundTraits = people.filter(function(person){
+    if(person.gender === gender || person.dob === dob || person.height === height || person.weight === weight || person.eyeColor === eyeColor
+      || person.occupation === occupation){
+        return true;
+      }
+      else{
+        return false;
+      }
+  })
+  console.log(foundTraits);
+  return foundTraits;
+}
+  })
+}
